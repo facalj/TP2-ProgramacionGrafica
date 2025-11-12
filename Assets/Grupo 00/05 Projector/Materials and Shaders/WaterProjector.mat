@@ -35,7 +35,7 @@ Material:
     m_Floats:
     - _distortion: 0.63224936
     - _distortion1: 0.63224936
-    - _speed: 0.221
+    - _speed: 0.15804479
     - _speed1: 0.17726083
     m_Colors: []
   m_BuildTextureStacks: []
