@@ -1,0 +1,11 @@
+fileFormatVersion: 2
+guid: 14d726b81200a2b4ab0cdf4a09b1f8af
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures:
+  - _TextureLava: {fileID: 2800000, guid: 8f0e7a62f0868d045b42745fd9952c2c, type: 3}
+  - _DirtTexture: {fileID: 2800000, guid: ceb1bacd3e5dc9b4cb4b85eb1a74cfb6, type: 3}
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Crack
+  m_Shader: {fileID: 4800000, guid: 14d726b81200a2b4ab0cdf4a09b1f8af, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 0
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: 2002
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _DirtTexture:
+        m_Texture: {fileID: 2800000, guid: ceb1bacd3e5dc9b4cb4b85eb1a74cfb6, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TextureLava:
+        m_Texture: {fileID: 2800000, guid: f7fb9fbf30ebf1b47991670dfd825383, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _texcoord:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _GlowIntensity: 3.02
+    - _GlowNoiseScale: 0.66
+    - _LavaIntensity: 1.27
+    - _YBorde: 0
+    - _YBordeMax: -0.779
+    - _YFondo: 0
+    - _YFondoMin: -1.428
+    - _ZBorde: -1.78
+    - _ZFondo: -2.73
+    - __dirty: 0
+    m_Colors:
+    - _GlowColor: {r: 0.8962264, g: 0.6841329, b: 0.097231485, a: 0}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1
