@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -14,7 +15,7 @@ public class ShaderSliderController2 : MonoBehaviour
     public bool usePropertyBlock = false;
 
     [Header("Opcional: Color RGBA (0..1)")]
-    public string colorProperty = "";
+    public string colorProperty = "";     // p.ej. "_Color" o vacío si no usás color
     public Slider rSlider;
     public Slider gSlider;
     public Slider bSlider;
@@ -23,8 +24,9 @@ public class ShaderSliderController2 : MonoBehaviour
     [Header("Floats (sliders mapeados a propiedades)")]
     public List<FloatBinding> floatBindings = new();
 
-    [Header("Vector2 (dos sliders por propiedad)")]
-    public List<Vector2Binding> vector2Bindings = new();
+
+    private UnityAction<float> _rCb, _gCb, _bCb, _aCb;
+    private bool _colorHooked = false;
 
     [Serializable]
     public class FloatBinding
@@ -34,25 +36,19 @@ public class ShaderSliderController2 : MonoBehaviour
         public Slider slider;
         public float sliderMin = 0f;
         public float sliderMax = 1f;
+
         [HideInInspector] public int propId;
     }
-
-    [Serializable]
-    public class Vector2Binding
+    void Start()
     {
-        [Tooltip("Reference Name en ASE (p.ej. _MyVector2)")]
-        public string propertyName = "_MyVector2";
-        public Slider xSlider;
-        public Slider ySlider;
-        public Vector2 min = Vector2.zero;
-        public Vector2 max = Vector2.one;
-        [HideInInspector] public int propId;
+        GetComponent<Renderer>().material.SetColor("_ColorStencil1", Color.red);
     }
-
+    // ------- Internals -------
     private readonly List<(Renderer r, int matIndex)> _targets = new();
     private readonly Dictionary<Renderer, MaterialPropertyBlock> _mpbCache = new();
     private int _colorId;
 
+    // ================== Lifecycle ==================
     private void OnEnable()
     {
         CachePropertyIds();
@@ -63,50 +59,89 @@ public class ShaderSliderController2 : MonoBehaviour
 
     private void OnDisable()
     {
-        HookUI(false);
+        HookUI(false);            // ya remueve SOLO tus callbacks
         SceneManager.activeSceneChanged -= OnSceneChanged;
         _targets.Clear();
         _mpbCache.Clear();
     }
 
-    private void OnValidate() => CachePropertyIds();
+    private void OnValidate()
+    {
+        CachePropertyIds();
+        // No hagas work pesado en edición; en play se reconstruye solo
+    }
 
     private void OnSceneChanged(Scene a, Scene b) => RebuildTargets();
 
     private void CachePropertyIds()
     {
         _colorId = string.IsNullOrEmpty(colorProperty) ? 0 : Shader.PropertyToID(colorProperty);
-        foreach (var fb in floatBindings) fb.propId = Shader.PropertyToID(fb.propertyName);
-        foreach (var vb in vector2Bindings) vb.propId = Shader.PropertyToID(vb.propertyName);
+        foreach (var fb in floatBindings)
+        {
+            fb.propId = Shader.PropertyToID(fb.propertyName);
+        }
     }
 
     private void HookUI(bool on)
     {
-        void Hook(Slider s, Action<float> cb)
-        {
-            if (!s) return;
-            if (on) s.onValueChanged.AddListener(v => cb(v));
-            else s.onValueChanged.RemoveAllListeners();
-        }
-
+        // Floats (queda igual que antes pero sin RemoveAllListeners global)
         foreach (var fb in floatBindings)
-            Hook(fb.slider, _ => ApplyFloat(fb));
-
-        foreach (var vb in vector2Bindings)
         {
-            Hook(vb.xSlider, _ => ApplyVector2(vb));
-            Hook(vb.ySlider, _ => ApplyVector2(vb));
+            if (fb.slider == null) continue;
+
+            // Primero remuevo mi callback si ya existía
+            // Truco: guardo el delegado en el propio slider usando closure estable
+            UnityAction<float> cb = null;
+            cb = (v) => ApplyFloat(fb);
+
+            // Para evitar duplicados, quito y agrego mi callback específico
+            fb.slider.onValueChanged.RemoveListener(cb);
+            if (on) fb.slider.onValueChanged.AddListener(cb);
         }
 
+        // Color
         if (!string.IsNullOrEmpty(colorProperty))
         {
-            Hook(rSlider, _ => ApplyColorFromUI());
-            Hook(gSlider, _ => ApplyColorFromUI());
-            Hook(bSlider, _ => ApplyColorFromUI());
-            Hook(aSlider, _ => ApplyColorFromUI());
+            if (!_colorHooked && on)
+            {
+                _rCb = _ => ApplyColorFromUI();
+                _gCb = _ => ApplyColorFromUI();
+                _bCb = _ => ApplyColorFromUI();
+                _aCb = _ => ApplyColorFromUI();
+
+                if (rSlider) rSlider.onValueChanged.AddListener(_rCb);
+                if (gSlider) gSlider.onValueChanged.AddListener(_gCb);
+                if (bSlider) bSlider.onValueChanged.AddListener(_bCb);
+                if (aSlider) aSlider.onValueChanged.AddListener(_aCb);
+
+                _colorHooked = true;
+
+                // Opcional: desactivar navegación para evitar “saltos” de foco entre sliders
+                TryDisableNavigation(rSlider);
+                TryDisableNavigation(gSlider);
+                TryDisableNavigation(bSlider);
+                TryDisableNavigation(aSlider);
+            }
+            else if (_colorHooked && !on)
+            {
+                if (rSlider) rSlider.onValueChanged.RemoveListener(_rCb);
+                if (gSlider) gSlider.onValueChanged.RemoveListener(_gCb);
+                if (bSlider) bSlider.onValueChanged.RemoveListener(_bCb);
+                if (aSlider) aSlider.onValueChanged.RemoveListener(_aCb);
+
+                _colorHooked = false;
+            }
         }
     }
+    private void TryDisableNavigation(Slider s)
+    {
+        if (!s) return;
+        var nav = s.navigation;
+        nav.mode = Navigation.Mode.None;
+        s.navigation = nav;
+    }
 
+    // ================== Target discovery ==================
     private void RebuildTargets()
     {
         _targets.Clear();
@@ -120,18 +155,19 @@ public class ShaderSliderController2 : MonoBehaviour
             var mats = r.sharedMaterials;
             for (int i = 0; i < mats.Length; i++)
             {
-                if (mats[i] == targetMaterial)
+                if (mats[i] == targetMaterial) // referencia exacta
                     _targets.Add((r, i));
             }
         }
 
+        // Inicializar UI con valores actuales
         InitFloatSlidersFromCurrent();
         InitColorSlidersFromCurrent();
-        InitVector2SlidersFromCurrent();
-
+        // Aplicar una primera vez para asegurar sincronía visual
         ApplyAll();
     }
 
+    // ================== Apply helpers ==================
     private MaterialPropertyBlock GetBlock(Renderer r)
     {
         if (!_mpbCache.TryGetValue(r, out var mpb))
@@ -144,9 +180,11 @@ public class ShaderSliderController2 : MonoBehaviour
 
     private void ApplyAll()
     {
-        foreach (var fb in floatBindings) ApplyFloat(fb);
-        foreach (var vb in vector2Bindings) ApplyVector2(vb);
-        if (!string.IsNullOrEmpty(colorProperty)) ApplyColorFromUI();
+        foreach (var fb in floatBindings)
+            ApplyFloat(fb);
+
+        if (!string.IsNullOrEmpty(colorProperty))
+            ApplyColorFromUI();
     }
 
     private void ApplyFloat(FloatBinding fb)
@@ -162,40 +200,13 @@ public class ShaderSliderController2 : MonoBehaviour
             return;
         }
 
-        foreach (var (r, mi) in _targets)
+        for (int i = 0; i < _targets.Count; i++)
         {
+            var (r, mi) = _targets[i];
             if (!r) continue;
             var mpb = GetBlock(r);
             r.GetPropertyBlock(mpb, mi);
             mpb.SetFloat(fb.propId, v);
-            r.SetPropertyBlock(mpb, mi);
-        }
-    }
-
-    private void ApplyVector2(Vector2Binding vb)
-    {
-        if (vb.xSlider == null || vb.ySlider == null || vb.propId == 0) return;
-
-        float tx = Mathf.InverseLerp(vb.xSlider.minValue, vb.xSlider.maxValue, vb.xSlider.value);
-        float ty = Mathf.InverseLerp(vb.ySlider.minValue, vb.ySlider.maxValue, vb.ySlider.value);
-
-        float vx = Mathf.Lerp(vb.min.x, vb.max.x, tx);
-        float vy = Mathf.Lerp(vb.min.y, vb.max.y, ty);
-        var vec = new Vector2(vx, vy);
-
-        if (!usePropertyBlock)
-        {
-            if (targetMaterial && targetMaterial.HasProperty(vb.propId))
-                targetMaterial.SetVector(vb.propId, vec);
-            return;
-        }
-
-        foreach (var (r, mi) in _targets)
-        {
-            if (!r) continue;
-            var mpb = GetBlock(r);
-            r.GetPropertyBlock(mpb, mi);
-            mpb.SetVector(vb.propId, vec);
             r.SetPropertyBlock(mpb, mi);
         }
     }
@@ -209,6 +220,15 @@ public class ShaderSliderController2 : MonoBehaviour
         float a = aSlider ? aSlider.value : 1f;
         var c = new Color(r, g, b, a);
 
+        if (!targetMaterial.HasProperty(_colorId))
+        {
+            Debug.LogWarning($"Material {targetMaterial.name} no tiene la propiedad {_colorId}.");
+        }
+        else
+        {
+            Debug.Log($"Seteando {_colorId} a {c} en material {targetMaterial.name}");
+        }
+
         if (!usePropertyBlock)
         {
             if (targetMaterial && targetMaterial.HasProperty(_colorId))
@@ -216,8 +236,9 @@ public class ShaderSliderController2 : MonoBehaviour
             return;
         }
 
-        foreach (var (rd, mi) in _targets)
+        for (int i = 0; i < _targets.Count; i++)
         {
+            var (rd, mi) = _targets[i];
             if (!rd) continue;
             var mpb = GetBlock(rd);
             rd.GetPropertyBlock(mpb, mi);
@@ -226,35 +247,42 @@ public class ShaderSliderController2 : MonoBehaviour
         }
     }
 
+    // ================== Init UI from current values ==================
     private void InitFloatSlidersFromCurrent()
     {
         foreach (var fb in floatBindings)
         {
             if (fb.slider == null || fb.propId == 0) continue;
 
-            float current = targetMaterial.HasProperty(fb.propId) ? targetMaterial.GetFloat(fb.propId) : 0f;
+            // Configurar rangos del slider si no los tocaste
+            if (fb.slider.minValue == 0f && fb.slider.maxValue == 1f)
+            {
+                fb.slider.minValue = 0f; // UI (0..1) por defecto
+                fb.slider.maxValue = 1f;
+            }
+
+            float current = 0f;
+            bool got = false;
+
+            if (usePropertyBlock && _targets.Count > 0)
+            {
+                var (r, mi) = _targets[0];
+                var mpb = GetBlock(r);
+                r.GetPropertyBlock(mpb, mi);
+                if (!mpb.isEmpty)
+                {
+                    current = mpb.GetFloat(fb.propId);
+                    got = true;
+                }
+            }
+
+            if (!got && targetMaterial && targetMaterial.HasProperty(fb.propId))
+                current = targetMaterial.GetFloat(fb.propId);
+
+            // Mapear al rango UI del slider
             float t = Mathf.InverseLerp(fb.sliderMin, fb.sliderMax, current);
             float sliderVal = Mathf.Lerp(fb.slider.minValue, fb.slider.maxValue, t);
             fb.slider.SetValueWithoutNotify(sliderVal);
-        }
-    }
-
-    private void InitVector2SlidersFromCurrent()
-    {
-        foreach (var vb in vector2Bindings)
-        {
-            if (vb.xSlider == null || vb.ySlider == null || vb.propId == 0) continue;
-
-            Vector4 current = targetMaterial.HasProperty(vb.propId) ? targetMaterial.GetVector(vb.propId) : Vector4.zero;
-
-            float tx = Mathf.InverseLerp(vb.min.x, vb.max.x, current.x);
-            float ty = Mathf.InverseLerp(vb.min.y, vb.max.y, current.y);
-
-            float sliderX = Mathf.Lerp(vb.xSlider.minValue, vb.xSlider.maxValue, tx);
-            float sliderY = Mathf.Lerp(vb.ySlider.minValue, vb.ySlider.maxValue, ty);
-
-            vb.xSlider.SetValueWithoutNotify(sliderX);
-            vb.ySlider.SetValueWithoutNotify(sliderY);
         }
     }
 
@@ -262,7 +290,23 @@ public class ShaderSliderController2 : MonoBehaviour
     {
         if (_colorId == 0) return;
 
-        Color c = targetMaterial.HasProperty(_colorId) ? targetMaterial.GetColor(_colorId) : Color.white;
+        Color c = Color.white;
+        bool got = false;
+
+        if (usePropertyBlock && _targets.Count > 0)
+        {
+            var (r, mi) = _targets[0];
+            var mpb = GetBlock(r);
+            r.GetPropertyBlock(mpb, mi);
+            if (!mpb.isEmpty)
+            {
+                c = mpb.GetColor(_colorId);
+                got = true;
+            }
+        }
+
+        if (!got && targetMaterial && targetMaterial.HasProperty(_colorId))
+            c = targetMaterial.GetColor(_colorId);
 
         if (rSlider) rSlider.SetValueWithoutNotify(c.r);
         if (gSlider) gSlider.SetValueWithoutNotify(c.g);

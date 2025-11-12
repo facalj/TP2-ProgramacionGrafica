@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: StencilVisible
-  m_Shader: {fileID: 4800000, guid: 8786b3c9ab9579f40920c2218df85893, type: 3}
+  m_Name: Mask
+  m_Shader: {fileID: 4800000, guid: dd12db9f73b2e7c4fbf7a7123f4e5a9d, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -24,8 +24,12 @@ Material:
     serializedVersion: 3
     m_TexEnvs: []
     m_Ints: []
-    m_Floats: []
+    m_Floats:
+    - _FresnelBias: 0
+    - _Power: 1.24
+    - _Scale: 1.38
     m_Colors:
-    - _Color0: {r: 0.27514908, g: 1, b: 0.23113206, a: 0}
+    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _Color0: {r: 0.27514902, g: 1, b: 0.23113197, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
