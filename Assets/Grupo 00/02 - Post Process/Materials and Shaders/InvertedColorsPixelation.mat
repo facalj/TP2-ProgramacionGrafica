@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M_PPInvert
-  m_Shader: {fileID: 4800000, guid: feec74a3b544807478db4f23701c6d9e, type: 3}
+  m_Name: InvertedColorsPixelation
+  m_Shader: {fileID: 4800000, guid: 3b226664c47ea214884f829277eb4c4a, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -23,12 +23,8 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - _RT:
-        m_Texture: {fileID: 8400000, guid: 2ba17cf073a14dd44833f986406f2a3c, type: 2}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _RT1:
-        m_Texture: {fileID: 8400000, guid: 52fe2e5eb6578154fbe703a3c07f0301, type: 2}
+    - _MainTex:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _texcoord:
@@ -37,8 +33,8 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Float0: 0
-    - __dirty: 0
-    m_Colors:
-    - _VectorPosition: {r: 0, g: 0, b: 0, a: 0}
+    - _ColorInversion1: 0
+    - _PixelationAmmount1: 1
+    m_Colors: []
   m_BuildTextureStacks: []
+  m_AllowLocking: 1

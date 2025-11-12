@@ -7,13 +7,13 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M_PPBloom
-  m_Shader: {fileID: 4800000, guid: eddce1e329ed8de48a936c2fbe110967, type: 3}
+  m_Name: GrayScaleVignette
+  m_Shader: {fileID: 4800000, guid: 7e005a4162030a04f947b1824778a0ed, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []
-  m_LightmapFlags: 0
+  m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -23,8 +23,12 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - _RT:
-        m_Texture: {fileID: 8400000, guid: 2ba17cf073a14dd44833f986406f2a3c, type: 2}
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Vignette:
+        m_Texture: {fileID: 2800000, guid: 50b66a8325af37144b3b61d576196bdf, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _texcoord:
@@ -33,11 +37,8 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Float0: 10
-    - _Frequency: 0.71
-    - _Intensity: 185.98
-    - _Noise: 9.99
-    - __dirty: 1
+    - _GrayScaleAmmount: 1
+    - _VignetteAmmount: 1
     m_Colors: []
   m_BuildTextureStacks: []
   m_AllowLocking: 1
