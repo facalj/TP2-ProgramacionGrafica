@@ -10,10 +10,10 @@ EditorBuildSettings:
     guid: 526244d3151fa9343bbf0369f3d0c3bc
   - enabled: 1
     path: Assets/Grupo 00/01 - Render Texture - Distance/01 - Distance.unity
-    guid: 8ecce3dc6e7647a4fb032f8adcf00994
+    guid: a5f74bb321fd85748901bedbca79538c
   - enabled: 1
     path: Assets/Grupo 00/01 - Render Texture - Distance/01 - Render.unity
-    guid: 464578e46757eac478de4c99fcee7246
+    guid: b947f77dd2c088b47a65b57f0de0591c
   - enabled: 1
     path: Assets/Grupo 00/05 - Proyector/05 - Proyector.unity
     guid: b67e70d0dca9d91409c8f760182069a1
