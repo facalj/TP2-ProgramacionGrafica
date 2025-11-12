@@ -4,7 +4,7 @@ Shader "Stencil"
 {
 	Properties
 	{
-		_Color0("Color 0", Color) = (0.2751491,1,0.2311321,0)
+		_BaseColor("BaseColor", Color) = (0.2751491,1,0.2311321,0)
 		_FresnelBias("FresnelBias", Float) = 0
 		_Scale("Scale", Float) = 0
 		_Power("Power", Float) = 0
@@ -76,7 +76,7 @@ Shader "Stencil"
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
 
-			uniform float4 _Color0;
+			uniform float4 _BaseColor;
 			uniform float _FresnelBias;
 			uniform float _Scale;
 			uniform float _Power;
@@ -128,7 +128,7 @@ Shader "Stencil"
 				float fresnelNode2 = ( _FresnelBias + _Scale * pow( 1.0 - fresnelNdotV2, _Power ) );
 				
 				
-				finalColor = ( _Color0 * fresnelNode2 );
+				finalColor = ( _BaseColor * fresnelNode2 );
 				return finalColor;
 			}
 			ENDCG
@@ -140,12 +140,12 @@ Shader "Stencil"
 }
 /*ASEBEGIN
 Version=18900
-115;331;1904;1552;1590.392;266.6274;1.3;True;True
-Node;AmplifyShaderEditor.RangedFloatNode;14;-790.675,169.3334;Inherit;False;Property;_FresnelBias;FresnelBias;1;0;Create;True;0;0;0;False;0;False;0;0;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;15;-782.675,248.3334;Inherit;False;Property;_Scale;Scale;2;0;Create;True;0;0;0;False;0;False;0;1.38;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;16;-771.675,336.3334;Inherit;False;Property;_Power;Power;3;0;Create;True;0;0;0;False;0;False;0;1.24;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.ColorNode;12;-567.0574,-101.5436;Inherit;False;Property;_Color0;Color 0;0;0;Create;True;0;0;0;False;0;False;0.2751491,1,0.2311321,0;0.275149,1,0.231132,0;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+1920;23;1920;988;1373.199;257.4738;1;True;False
+Node;AmplifyShaderEditor.RangedFloatNode;14;-782.675,150.3334;Inherit;False;Property;_FresnelBias;FresnelBias;1;0;Create;True;0;0;0;False;0;False;0;0;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;15;-785.675,239.3334;Inherit;False;Property;_Scale;Scale;2;0;Create;True;0;0;0;False;0;False;0;1.38;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;16;-786.675,331.3334;Inherit;False;Property;_Power;Power;3;0;Create;True;0;0;0;False;0;False;0;1.24;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.FresnelNode;2;-572.2629,111.4445;Inherit;False;Standard;WorldNormal;ViewDir;False;False;5;0;FLOAT3;0,0,1;False;4;FLOAT3;0,0,0;False;1;FLOAT;0;False;2;FLOAT;1;False;3;FLOAT;5;False;1;FLOAT;0
+Node;AmplifyShaderEditor.ColorNode;12;-567.0574,-101.5436;Inherit;False;Property;_BaseColor;BaseColor;0;0;Create;True;0;0;0;False;0;False;0.2751491,1,0.2311321,0;0.2751489,1,0.2311319,0;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;10;-237.3799,-26.98619;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;FLOAT;0;False;1;COLOR;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;0;-0.2868843,-22.51122;Float;False;True;-1;2;ASEMaterialInspector;100;1;Stencil;0770190933193b94aaa3065e307002fa;True;Unlit;0;0;Unlit;2;False;True;0;1;False;-1;0;False;-1;0;1;False;-1;0;False;-1;True;0;False;-1;0;False;-1;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;True;True;True;True;True;0;False;-1;False;False;False;False;False;False;True;True;True;1;False;-1;1;False;-1;1;False;-1;6;False;-1;1;False;-1;0;False;-1;0;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;True;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;1;RenderType=Opaque=RenderType;True;2;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;LightMode=ForwardBase;False;0;;0;0;Standard;1;Vertex Position,InvertActionOnDeselection;1;0;1;True;False;;False;0
 WireConnection;2;1;14;0
@@ -155,4 +155,4 @@ WireConnection;10;0;12;0
 WireConnection;10;1;2;0
 WireConnection;0;0;10;0
 ASEEND*/
-//CHKSM=15F53536E9053D54389D37108F21FF8AC61D2321
+//CHKSM=E7335B8A2D1CEA16020F89E3A15451581ACC54D5
