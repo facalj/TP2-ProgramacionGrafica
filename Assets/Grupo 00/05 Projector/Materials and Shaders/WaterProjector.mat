@@ -33,7 +33,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _distortion: 0.39224932
+    - _distortion: 0.8
     - _distortion1: 0.63224936
     - _speed: 0.43518764
     - _speed1: 0.17726083
