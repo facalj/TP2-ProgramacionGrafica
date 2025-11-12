@@ -1014,6 +1014,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1255941935960166015, guid: d0123a51b30d744448703e054bd06d79, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 642771643}
+    - target: {fileID: 1255941935960166015, guid: d0123a51b30d744448703e054bd06d79, type: 3}
       propertyPath: m_NotificationBehavior
       value: 2
       objectReference: {fileID: 0}
@@ -1189,6 +1193,11 @@ MonoBehaviour:
     min: 0
     max: 1
     id: 0
+--- !u!20 &642771643 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 7288290581213754672, guid: d0123a51b30d744448703e054bd06d79, type: 3}
+  m_PrefabInstance: {fileID: 642771640}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &650885736
 GameObject:
   m_ObjectHideFlags: 0
