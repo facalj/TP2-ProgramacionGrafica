@@ -57,9 +57,9 @@ Material:
     - _TextureTiling1: 4
     - _WaveAmplitude: 0.3
     - _WaveAmplitude1: 0.3
-    - _WaveFrequency: 2
+    - _WaveFrequency: 5
     - _WaveSpeed: 3
-    - __dirty: 0
+    - __dirty: 1
     m_Colors:
     - _PanDir: {r: -0.5, g: -0.55, b: 0, a: 0}
     - _PanDir1: {r: -0.5, g: -0.55, b: 0, a: 0}
