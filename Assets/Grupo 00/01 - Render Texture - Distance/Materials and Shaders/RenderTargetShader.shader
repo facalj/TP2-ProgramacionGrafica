@@ -6,9 +6,9 @@ Shader "Custom/RenderTargetShader"
 	{
 		_TextureSample0("Texture Sample 0", 2D) = "white" {}
 		_DistortionAmount0("_DistortionAmount0", Float) = 0
-		_LineDensity("LineDensity", Float) = 100
+		_LineDensity("_LineDensity", Range( 0 , 200)) = 100
 		_PatternAmount("PatternAmount", Float) = 0.1
-		_PixelDensity("PixelDensity", Float) = 200
+		_PixelDensity("_PixelDensity", Range( 0 , 200)) = 200
 		[HideInInspector] _texcoord( "", 2D ) = "white" {}
 		[HideInInspector] __dirty( "", Int ) = 1
 	}
@@ -50,21 +50,21 @@ Shader "Custom/RenderTargetShader"
 }
 /*ASEBEGIN
 Version=18900
-8;74;1904;937;2970.75;706.5923;1.60253;True;True
+1920;23;1600;816;2272.099;446.4155;1.3;True;True
 Node;AmplifyShaderEditor.RangedFloatNode;46;-2131.479,486.1706;Inherit;False;Property;_DistortionAmount0;_DistortionAmount0;1;0;Create;True;0;0;0;False;0;False;0;0.2;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleTimeNode;19;-1922.279,282.8297;Inherit;False;1;0;FLOAT;1;False;1;FLOAT;0
 Node;AmplifyShaderEditor.TextureCoordinatesNode;18;-2091.022,146.3872;Inherit;False;0;-1;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.SimpleDivideOpNode;48;-1923.335,389.9735;Inherit;False;2;0;FLOAT;0;False;1;FLOAT;10;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;21;-1745.279,281.8297;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.ComponentMaskNode;27;-1804.33,150.5202;Inherit;False;True;False;True;True;1;0;FLOAT2;0,0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;28;-1518.261,271.518;Inherit;False;Property;_LineDensity;LineDensity;2;0;Create;True;0;0;0;False;0;False;100;100;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleAddOpNode;36;-1508.94,154.1574;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;10;-1676.982,-41.49692;Inherit;False;Property;_PixelDensity;PixelDensity;4;0;Create;True;0;0;0;False;0;False;200;200;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;10;-1676.982,-41.49692;Inherit;False;Property;_PixelDensity;_PixelDensity;4;0;Create;True;0;0;0;False;0;False;200;200;0;200;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;28;-1535.163,276.718;Inherit;False;Property;_LineDensity;_LineDensity;2;0;Create;True;0;0;0;False;0;False;100;100;0;200;0;1;FLOAT;0
 Node;AmplifyShaderEditor.TextureCoordinatesNode;9;-1750.982,-176.4969;Inherit;False;0;-1;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;29;-1296.811,155.198;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;11;-1491.982,-173.4969;Inherit;False;2;2;0;FLOAT2;0,0;False;1;FLOAT;0;False;1;FLOAT2;0
-Node;AmplifyShaderEditor.FractNode;30;-1140.811,155.198;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;29;-1296.811,155.198;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.FloorOpNode;15;-1329.151,-175.7627;Inherit;False;1;0;FLOAT2;0,0;False;1;FLOAT2;0
+Node;AmplifyShaderEditor.FractNode;30;-1140.811,155.198;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;44;-956.3696,335.7622;Inherit;False;Property;_PatternAmount;PatternAmount;3;0;Create;True;0;0;0;False;0;False;0.1;0.1;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.SmoothstepOpNode;42;-970.334,154.1917;Inherit;False;3;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;1;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleDivideOpNode;16;-1160.151,-175.7627;Inherit;False;2;0;FLOAT2;0,0;False;1;FLOAT;0;False;1;FLOAT2;0
@@ -81,12 +81,12 @@ WireConnection;21;1;48;0
 WireConnection;27;0;18;0
 WireConnection;36;0;27;0
 WireConnection;36;1;21;0
-WireConnection;29;0;36;0
-WireConnection;29;1;28;0
 WireConnection;11;0;9;0
 WireConnection;11;1;10;0
-WireConnection;30;0;29;0
+WireConnection;29;0;36;0
+WireConnection;29;1;28;0
 WireConnection;15;0;11;0
+WireConnection;30;0;29;0
 WireConnection;42;0;30;0
 WireConnection;16;0;15;0
 WireConnection;16;1;10;0
@@ -101,4 +101,4 @@ WireConnection;5;0;45;0
 WireConnection;5;1;6;0
 WireConnection;0;0;5;0
 ASEEND*/
-//CHKSM=9794738CDABEE6520AC580D96DF222D5326350AA
+//CHKSM=A779808273697FC97098A692EDE1C6C87B79DC09
