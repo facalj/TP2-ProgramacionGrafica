@@ -99,7 +99,10 @@ Material:
     m_Floats:
     - _ColorMask: 15
     - _Distortion: 0
+    - _DistortionAmount: 0.64298093
+    - _FlowSpeed: 0.287767
     - _Frecuencia: 0.37
+    - _RotSpeed: 6.403897
     - _Stencil: 0
     - _StencilComp: 8
     - _StencilOp: 0
@@ -110,5 +113,9 @@ Material:
     - _CirclePos: {r: 0, g: 0, b: 0, a: 0}
     - _CircleScale: {r: 1, g: 1, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color0: {r: 0.13081935, g: 0.047970813, b: 0.9245283, a: 0}
+    - _RotColor: {r: 0.13081935, g: 0.047970813, b: 0.9245283, a: 0}
+    - _RotScale: {r: 0, g: 0, b: 1, a: -5}
+    - _VectorMove: {r: 0.1, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
