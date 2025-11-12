@@ -13,12 +13,10 @@ MonoBehaviour:
   m_Name: SceneSettings
   m_EditorClassIdentifier: 
   scenes:
-  - Heighmap+Tesellation - Burgos, Tomas
-  - ObjectDissapear Glow - Burgos, Tomas
-  - Toon Shader Ramps - Marcer
-  - Parallax Mapping- Marcer
-  - ToonWater - Araujo
-  - FresnelSimple - Rafael
-  - DepthFade - Rafael
-  - Screenworld space uv-Drogo
-  - Toon Shader-drogo
+  - 00 -  MainMenu
+  - 01 - Distance
+  - 01 - Render
+  - 02 - PostProccess
+  - 03 - UI
+  - 04 - Stencil
+  - 05 - Proyector
