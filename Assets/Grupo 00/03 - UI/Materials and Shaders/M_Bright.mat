@@ -81,7 +81,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _BrightTilingX: 1.01
+    - _BrightTilingY: 1
     - _ColorMask: 15
+    - _PannerSpeed: 1.6428572
     - _Stencil: 0
     - _StencilComp: 8
     - _StencilOp: 0
@@ -89,6 +92,8 @@ Material:
     - _StencilWriteMask: 255
     - _UseUIAlphaClip: 0
     m_Colors:
+    - _BrightTiling: {r: 1, g: 1, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _PannerSpeed: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

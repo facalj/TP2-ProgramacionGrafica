@@ -16,6 +16,7 @@ Shader "Flow"
 		_ColorMask ("Color Mask", Float) = 15
 
 		[Toggle(UNITY_UI_ALPHACLIP)] _UseUIAlphaClip ("Use Alpha Clip", Float) = 0
+		_TimeScale("TimeScale", Range( 0 , 5)) = 1
 		_Texture0("Texture 0", 2D) = "white" {}
 		_Texture1("Texture 1", 2D) = "white" {}
 
@@ -99,6 +100,7 @@ Shader "Flow"
 			uniform sampler2D _Texture1;
 			uniform sampler2D _Texture0;
 			uniform float4 _Texture0_ST;
+			uniform float _TimeScale;
 
 			
 			v2f vert( appdata_t IN  )
@@ -127,7 +129,8 @@ Shader "Flow"
 				float2 uv_Texture0 = IN.texcoord.xy * _Texture0_ST.xy + _Texture0_ST.zw;
 				float4 tex2DNode14_g1 = tex2D( _Texture0, uv_Texture0 );
 				float2 appendResult20_g1 = (float2(tex2DNode14_g1.r , tex2DNode14_g1.g));
-				float TimeVar197_g1 = _Time.y;
+				float mulTime4 = _Time.y * _TimeScale;
+				float TimeVar197_g1 = mulTime4;
 				float2 temp_cast_0 = (TimeVar197_g1).xx;
 				float2 temp_output_18_0_g1 = ( appendResult20_g1 - temp_cast_0 );
 				float4 tex2DNode72_g1 = tex2D( _Texture1, temp_output_18_0_g1 );
@@ -153,15 +156,17 @@ Shader "Flow"
 }
 /*ASEBEGIN
 Version=18900
-0;647;1506;344;2795.628;129.7374;2.753344;True;False
-Node;AmplifyShaderEditor.TexturePropertyNode;3;-776.0961,-80.44003;Inherit;True;Property;_Texture1;Texture 1;8;0;Create;True;0;0;0;False;0;False;131633c45b26caa4f9673a16077a1970;None;False;white;Auto;Texture2D;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
-Node;AmplifyShaderEditor.TexturePropertyNode;2;-773.6103,122.5796;Inherit;True;Property;_Texture0;Texture 0;7;0;Create;True;0;0;0;False;0;False;7b0842e3d0da6bf468f08b4a0ad9db9b;None;False;white;Auto;Texture2D;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
-Node;AmplifyShaderEditor.SimpleTimeNode;4;-737.5372,410.2301;Inherit;False;1;0;FLOAT;1;False;1;FLOAT;0
+343;73;1053;535;1430.011;-7.175098;1.162652;True;False
+Node;AmplifyShaderEditor.RangedFloatNode;5;-1083.541,340.856;Inherit;False;Property;_TimeScale;TimeScale;7;0;Create;True;0;0;0;False;0;False;1;1;0;5;0;1;FLOAT;0
+Node;AmplifyShaderEditor.TexturePropertyNode;3;-776.0961,-80.44003;Inherit;True;Property;_Texture1;Texture 1;9;0;Create;True;0;0;0;False;0;False;131633c45b26caa4f9673a16077a1970;131633c45b26caa4f9673a16077a1970;False;white;Auto;Texture2D;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
+Node;AmplifyShaderEditor.TexturePropertyNode;2;-773.6103,122.5796;Inherit;True;Property;_Texture0;Texture 0;8;0;Create;True;0;0;0;False;0;False;7b0842e3d0da6bf468f08b4a0ad9db9b;7b0842e3d0da6bf468f08b4a0ad9db9b;False;white;Auto;Texture2D;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
+Node;AmplifyShaderEditor.SimpleTimeNode;4;-736.3745,411.3928;Inherit;False;1;0;FLOAT;1;False;1;FLOAT;0
 Node;AmplifyShaderEditor.FunctionNode;1;-383.5709,2.41986;Inherit;False;UI-Sprite Effect Layer;0;;1;789bf62641c5cfe4ab7126850acc22b8;18,74,1,204,1,191,0,225,0,242,0,237,0,249,0,186,0,177,0,182,0,229,0,92,1,98,0,234,0,126,0,129,1,130,0,31,0;18;192;COLOR;1,1,1,1;False;39;COLOR;1,1,1,1;False;37;SAMPLER2D;;False;218;FLOAT2;0,0;False;239;FLOAT2;0,0;False;181;FLOAT2;0,0;False;75;SAMPLER2D;;False;80;FLOAT;1;False;183;FLOAT2;0,0;False;188;SAMPLER2D;;False;33;SAMPLER2D;;False;248;FLOAT2;0,0;False;233;SAMPLER2D;;False;101;SAMPLER2D;;False;57;FLOAT4;0,0,0,0;False;40;FLOAT;0;False;231;FLOAT;1;False;30;FLOAT;1;False;2;COLOR;0;FLOAT2;172
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;0;0,0;Float;False;True;-1;2;ASEMaterialInspector;0;4;Flow;5056123faa0c79b47ab6ad7e8bf059a4;True;Default;0;0;Default;2;False;True;2;5;False;-1;10;False;-1;0;1;False;-1;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;True;2;False;-1;False;True;True;True;True;True;0;True;-9;False;False;False;False;False;False;False;True;True;0;True;-5;255;True;-8;255;True;-7;0;True;-4;0;True;-6;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;2;False;-1;True;0;True;-11;False;True;5;Queue=Transparent=Queue=0;IgnoreProjector=True;RenderType=Transparent=RenderType;PreviewType=Plane;CanUseSpriteAtlas=True;False;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;2;0;;0;0;Standard;0;0;1;True;False;;False;0
+WireConnection;4;0;5;0
 WireConnection;1;37;3;0
 WireConnection;1;33;2;0
 WireConnection;1;40;4;0
 WireConnection;0;0;1;0
 ASEEND*/
-//CHKSM=07003BE220975A22773C773FB7990E0D0B468E3E
+//CHKSM=700C995E01C175FBED9139921D3A819989CB16D1
