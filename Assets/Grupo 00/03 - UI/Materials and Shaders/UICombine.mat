@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: UIDistortion
+  m_Name: UICombine
   m_Shader: {fileID: 4800000, guid: c742c2e88349c7e4fab2327a18218c1a, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
