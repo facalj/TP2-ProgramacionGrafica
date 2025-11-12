@@ -2593,12 +2593,12 @@ MonoBehaviour:
     min: 0
     max: 1
     id: 0
-  - propertyName: _ColorInversion
+  - propertyName: _ColorInversion1
     slider: {fileID: 1411819022}
     min: 0
     max: 1
     id: 0
-  - propertyName: _PixelationAmmount
+  - propertyName: _PixelationAmmount1
     slider: {fileID: 16116119}
     min: 0
     max: 1
