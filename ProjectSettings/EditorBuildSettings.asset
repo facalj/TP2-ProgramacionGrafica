@@ -15,14 +15,14 @@ EditorBuildSettings:
     path: Assets/Grupo 00/01 - Render Texture - Distance/01 - Render.unity
     guid: b947f77dd2c088b47a65b57f0de0591c
   - enabled: 1
-    path: Assets/Grupo 00/05 - Proyector/05 - Proyector.unity
-    guid: b67e70d0dca9d91409c8f760182069a1
-  - enabled: 1
     path: Assets/Grupo 00/04 - Stencil/04 - Stencil.unity
     guid: 5afcf5114d806aa47906e59981f48fbd
   - enabled: 1
     path: Assets/Grupo 00/03 - UI/03 - UI.unity
     guid: 764cd124a471fd442bcd03c9920013a6
+  - enabled: 1
+    path: Assets/Grupo 00/05 Projector/05 - Projector.unity
+    guid: 62ff73970c663684980b33295df78a9c
   - enabled: 1
     path: Assets/Grupo 00/02 - Post Process/02 - PostProccess.unity
     guid: 30e8f777e0ab5e14594e6120036905e8

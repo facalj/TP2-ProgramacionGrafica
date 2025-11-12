@@ -137,7 +137,7 @@ Shader "StencilVisible"
 }
 /*ASEBEGIN
 Version=18900
-1928;31;1904;972;2100.262;707.3813;1.617751;True;False
+1928;31;1904;972;2382.745;832.0893;2.091759;True;False
 Node;AmplifyShaderEditor.RangedFloatNode;5;-988.8745,120.636;Inherit;False;Property;_Scale;Scale;2;0;Create;True;0;0;0;False;0;False;0;1;1;10;0;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;6;-994.8745,209.6361;Inherit;False;Property;_Power;Power;3;0;Create;True;0;0;0;False;0;False;1;1;1;10;0;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;4;-990.8745,33.63596;Inherit;False;Property;_Bias;Bias;1;0;Create;False;0;0;0;False;0;False;0;1;1;10;0;1;FLOAT;0
@@ -152,4 +152,4 @@ WireConnection;3;0;2;0
 WireConnection;3;1;1;0
 WireConnection;0;0;3;0
 ASEEND*/
-//CHKSM=EC0AD34AC89DAC535D7656CA10C4B23C15C0737D
+//CHKSM=FC5016D590B98DC6D55BC3EFAB5385A8B545786A
