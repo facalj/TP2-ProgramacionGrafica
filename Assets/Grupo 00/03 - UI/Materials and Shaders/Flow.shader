@@ -156,8 +156,8 @@ Shader "Flow"
 }
 /*ASEBEGIN
 Version=18900
-343;73;1053;535;1430.011;-7.175098;1.162652;True;False
-Node;AmplifyShaderEditor.RangedFloatNode;5;-1083.541,340.856;Inherit;False;Property;_TimeScale;TimeScale;7;0;Create;True;0;0;0;False;0;False;1;1;0;5;0;1;FLOAT;0
+343;73;1053;535;1705.766;90.02711;1.462651;True;False
+Node;AmplifyShaderEditor.RangedFloatNode;5;-1061.452,403.6392;Inherit;False;Property;_TimeScale;TimeScale;7;0;Create;True;0;0;0;False;0;False;1;1;0;5;0;1;FLOAT;0
 Node;AmplifyShaderEditor.TexturePropertyNode;3;-776.0961,-80.44003;Inherit;True;Property;_Texture1;Texture 1;9;0;Create;True;0;0;0;False;0;False;131633c45b26caa4f9673a16077a1970;131633c45b26caa4f9673a16077a1970;False;white;Auto;Texture2D;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
 Node;AmplifyShaderEditor.TexturePropertyNode;2;-773.6103,122.5796;Inherit;True;Property;_Texture0;Texture 0;8;0;Create;True;0;0;0;False;0;False;7b0842e3d0da6bf468f08b4a0ad9db9b;7b0842e3d0da6bf468f08b4a0ad9db9b;False;white;Auto;Texture2D;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
 Node;AmplifyShaderEditor.SimpleTimeNode;4;-736.3745,411.3928;Inherit;False;1;0;FLOAT;1;False;1;FLOAT;0
@@ -169,4 +169,4 @@ WireConnection;1;33;2;0
 WireConnection;1;40;4;0
 WireConnection;0;0;1;0
 ASEEND*/
-//CHKSM=700C995E01C175FBED9139921D3A819989CB16D1
+//CHKSM=81B5A836A932B19DE1D5A3C36532BBEF1021073C
