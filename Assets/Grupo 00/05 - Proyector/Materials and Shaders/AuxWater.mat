@@ -63,7 +63,7 @@ Material:
     - _Pow: 3.42
     - _Scale: 0.772
     - _TextureTiling: 4
-    - __dirty: 0
+    - __dirty: 1
     m_Colors:
     - _Color0: {r: 0, g: 1, b: 0.9593883, a: 0}
     - _PanDir: {r: -0.5, g: -0.55, b: 0, a: 0}
