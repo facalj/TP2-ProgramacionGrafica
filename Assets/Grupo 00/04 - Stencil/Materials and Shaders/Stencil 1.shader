@@ -4,7 +4,7 @@ Shader "Stencil 1"
 {
 	Properties
 	{
-		_BaseColor("BaseColor", Color) = (0,0.1185064,1,0)
+		_ColorStencil1("ColorStencil1", Color) = (0,0.1185064,1,0)
 
 	}
 	
@@ -72,7 +72,7 @@ Shader "Stencil 1"
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
 
-			uniform float4 _BaseColor;
+			uniform float4 _ColorStencil1;
 
 			
 			v2f vert ( appdata v )
@@ -111,7 +111,7 @@ Shader "Stencil 1"
 				#endif
 				
 				
-				finalColor = _BaseColor;
+				finalColor = _ColorStencil1;
 				return finalColor;
 			}
 			ENDCG
@@ -123,9 +123,9 @@ Shader "Stencil 1"
 }
 /*ASEBEGIN
 Version=18900
-0;478;1506;513;2656.044;728.0286;2.892224;True;False
-Node;AmplifyShaderEditor.ColorNode;1;-58,-55.5;Inherit;False;Property;_BaseColor;BaseColor;0;0;Create;True;0;0;0;False;0;False;0,0.1185064,1,0;0,0.1185064,1,0;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;0;173,-52;Float;False;True;-1;2;ASEMaterialInspector;100;1;Stencil 1;0770190933193b94aaa3065e307002fa;True;Unlit;0;0;Unlit;2;False;True;0;1;False;-1;0;False;-1;0;1;False;-1;0;False;-1;True;0;False;-1;0;False;-1;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;True;True;True;True;True;0;False;-1;False;False;False;False;False;False;True;True;True;100;False;-1;255;False;-1;255;False;-1;5;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;True;True;2;False;-1;True;7;False;-1;True;True;0;False;-1;0;False;-1;True;1;RenderType=Opaque=RenderType;True;2;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;LightMode=ForwardBase;False;0;;0;0;Standard;1;Vertex Position,InvertActionOnDeselection;1;0;1;True;False;;False;0
+1928;31;1904;972;933.2622;448.1923;1.148572;True;False
+Node;AmplifyShaderEditor.ColorNode;1;-366.5875,-130.7356;Inherit;False;Property;_ColorStencil1;ColorStencil1;0;0;Create;False;0;0;0;False;0;False;0,0.1185064,1,0;0,0.1185063,1,0;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;0;132.2519,-132.4001;Float;False;True;-1;2;ASEMaterialInspector;100;1;Stencil 1;0770190933193b94aaa3065e307002fa;True;Unlit;0;0;Unlit;2;False;True;0;1;False;-1;0;False;-1;0;1;False;-1;0;False;-1;True;0;False;-1;0;False;-1;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;True;True;True;True;True;0;False;-1;False;False;False;False;False;False;True;True;True;100;False;-1;255;False;-1;255;False;-1;5;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;True;True;2;False;-1;True;7;False;-1;True;True;0;False;-1;0;False;-1;True;1;RenderType=Opaque=RenderType;True;2;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;LightMode=ForwardBase;False;0;;0;0;Standard;1;Vertex Position,InvertActionOnDeselection;1;0;1;True;False;;False;0
 WireConnection;0;0;1;0
 ASEEND*/
-//CHKSM=0B87E908C33DC7B80EFFEFCBCFEE34206E8E7FCA
+//CHKSM=3E04FB13A38F4DDC792E6CEC79E57653C8F11415
