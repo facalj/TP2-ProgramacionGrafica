@@ -27,9 +27,15 @@ Material:
         m_Texture: {fileID: 2800000, guid: a181d94e02060194d8af320d45808894, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _texcoord:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
-    m_Floats: []
+    m_Floats:
+    - _Scale: 5
+    - _Size: 1
     m_Colors:
-    - _ColorCircle: {r: 0.7035713, g: 0.8035714, b: 0.385714, a: 0.95}
+    - _ColorCircle: {r: 0.0735581, g: 0.8207547, b: 0.24995652, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
