@@ -30,6 +30,6 @@ Material:
     m_Ints: []
     m_Floats: []
     m_Colors:
-    - _ColorCircle: {r: 0.7035713, g: 0.8035714, b: 0.385714, a: 0.95}
+    - _ColorCircle: {r: 0.7035713, g: 0.8035714, b: 0.38571388, a: 0.95}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
