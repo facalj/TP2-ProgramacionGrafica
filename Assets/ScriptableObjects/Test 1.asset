@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6d3507e2a0c4757409f86decfec5fa62, type: 3}
-  m_Name: Test
+  m_Name: Test 1
   m_EditorClassIdentifier: 
   id: puro
   displayName: Pyro
   description: "It*s Pyro\t\n"
-  icon: {fileID: 21300000, guid: 4ff2311748d96af47969f3143c5e6fe5, type: 3}
-  modelPrefab: {fileID: 5840738922547883108, guid: 8625a1dcdb4382e48b39fb85dd22801e, type: 3}
+  icon: {fileID: 21300000, guid: 7c003e971e4dd774294e2a032162797e, type: 3}
+  modelPrefab: {fileID: 8065585723535886385, guid: 6903efb630043a74aa77c94003d936b5, type: 3}

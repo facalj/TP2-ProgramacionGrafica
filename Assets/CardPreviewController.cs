@@ -22,7 +22,7 @@ public sealed class CardPreviewController : MonoBehaviour
     {
         if (selectionManager == null)
         {
-            selectionManager = FindObjectOfType<CardSelectionManager>();
+            selectionManager = FindFirstObjectByType<CardSelectionManager>();
         }
 
         if (previewAnchor == null)

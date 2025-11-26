@@ -28,7 +28,7 @@ public sealed class CardCameraViewController : MonoBehaviour
     {
         if (previewController == null)
         {
-            previewController = FindObjectOfType<CardPreviewController>();
+            previewController = FindFirstObjectByType<CardPreviewController>();
         }
 
         ApplyViewMode(currentMode);
@@ -58,7 +58,7 @@ public sealed class CardCameraViewController : MonoBehaviour
 
         if (focusCamera != null)
         {
-            focusCamera.Follow = currentTarget;
+            focusCamera.Follow = null;
             focusCamera.LookAt = currentTarget;
         }
 
