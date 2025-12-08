@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: bae8edd6425af794a89c22997f614684
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures:
+  - _Texture: {fileID: 2800000, guid: 6b6e7903612e77f4ba1d6a5c407bbad4, type: 3}
+  - _Water: {fileID: 2800000, guid: e3df42a01926c6a45b12f6856df4c618, type: 3}
+  - _DistortionNormalMap: {fileID: 2800000, guid: dd2fd2df93418444c8e280f1d34deeb5, type: 3}
+  - _BlendFireMask: {fileID: 2800000, guid: 55d8d6939f4a8d1459d9e8a23745da0a, type: 3}
+  - _Text_Ramp: {fileID: 2800000, guid: 131633c45b26caa4f9673a16077a1970, type: 3}
+  - _Text_Border: {fileID: 2800000, guid: 67024cf7307e4394ba78211aa1573ecb, type: 3}
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
