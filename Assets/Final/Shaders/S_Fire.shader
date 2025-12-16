@@ -177,7 +177,7 @@ Shader "S_Fire"
 }
 /*ASEBEGIN
 Version=18900
-0;165;1407;826;1240.998;445.1408;1.759978;True;False
+0;419;1407;572;1240.998;445.1408;1.759978;True;False
 Node;AmplifyShaderEditor.CommentaryNode;1;-1439.765,-582.9507;Inherit;False;640.2814;284.7804;Sprite;2;8;3;;1,1,1,1;0;0
 Node;AmplifyShaderEditor.TexturePropertyNode;3;-1389.765,-532.9508;Inherit;True;Property;_Texture;Texture;10;0;Create;True;0;0;0;False;0;False;6b6e7903612e77f4ba1d6a5c407bbad4;6b6e7903612e77f4ba1d6a5c407bbad4;False;white;Auto;Texture2D;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
 Node;AmplifyShaderEditor.SamplerNode;8;-1117.184,-528.1704;Inherit;True;Property;_TextureSample0;Texture Sample 0;7;0;Create;True;0;0;0;False;0;False;-1;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
@@ -201,4 +201,4 @@ WireConnection;15;33;13;0
 WireConnection;15;40;11;4
 WireConnection;0;0;15;0
 ASEEND*/
-//CHKSM=BCD551468948B3760B263CCE87F498D7CCB69A8A
+//CHKSM=6A7D5CA89D012F9080F5BBBB437987680F3FAFB3
