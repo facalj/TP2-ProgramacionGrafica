@@ -283,7 +283,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 150, y: 200}
+  m_SizeDelta: {x: 270, y: 383}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1074114937219275783
 MonoBehaviour:
@@ -303,10 +303,10 @@ MonoBehaviour:
   tiltParent: {fileID: 758215882254232761}
   cardImage: {fileID: 1187141359610332625}
   followSpeed: 30
-  rotationAmount: 5
-  rotationSpeed: 5
-  autoTiltAmount: 5
-  manualTiltAmount: 3
+  rotationAmount: 2
+  rotationSpeed: 2
+  autoTiltAmount: 2
+  manualTiltAmount: 2
   tiltSpeed: 2
   scaleAnimations: 1
   scaleOnHover: 1.15
@@ -321,6 +321,7 @@ MonoBehaviour:
   swapTransition: 0.15
   swapVibrato: 5
   curve: {fileID: 11400000, guid: 7d1ba638ef0128e4cad9d72f6a02b361, type: 2}
+  rotateOnlyWhenCentered: 1
 --- !u!223 &659720391332504000
 Canvas:
   m_ObjectHideFlags: 0

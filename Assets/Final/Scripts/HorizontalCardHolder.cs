@@ -1,59 +1,64 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
+﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using DG.Tweening;
-using System.Linq;
 
 public class HorizontalCardHolder : MonoBehaviour
 {
-
     [SerializeField] private Card selectedCard;
-    [SerializeReference] private Card hoveredCard;
 
     [SerializeField] private GameObject slotPrefab;
-    private RectTransform rect;
 
     [Header("Spawn Settings")]
     [SerializeField] private int cardsToSpawn = 7;
-    public List<Card> cards;
+    public List<Card> cards = new List<Card>();
 
-    bool isCrossing = false;
-    [SerializeField] private bool tweenCardReturn = true;
+    [Header("Center Visual Layer")]
+    [SerializeField] private RectTransform centeredVisualLayer;
 
-    void Start()
+    [Header("Center Visual Settings")]
+    [SerializeField] private float centerTweenTime = 0.25f;
+    [SerializeField] private Vector3 centeredScale = Vector3.one * 1.1f;
+
+    private Card centeredCard;
+
+    private readonly Dictionary<Card, VisualRestoreData> restoreData = new Dictionary<Card, VisualRestoreData>();
+
+    private struct VisualRestoreData
     {
-        for (int i = 0; i < cardsToSpawn; i++)
+        public RectTransform visualRect;
+        public Transform originalParent;
+        public int originalSiblingIndex;
+        public Vector2 originalAnchoredPos;
+        public Vector3 originalScale;
+    }
+
+    private void Start()
+    {
+        CreateSlots();
+        CollectCards();
+        HookEvents();
+    }
+
+    private void CreateSlots()
+    {
+        for (int i = transform.childCount; i < cardsToSpawn; i++)
         {
             Instantiate(slotPrefab, transform);
         }
+    }
 
-        rect = GetComponent<RectTransform>();
-        cards = GetComponentsInChildren<Card>().ToList();
+    private void CollectCards()
+    {
+        cards = GetComponentsInChildren<Card>(true).ToList();
+    }
 
-        int cardCount = 0;
-
+    private void HookEvents()
+    {
         foreach (Card card in cards)
         {
-            card.PointerEnterEvent.AddListener(CardPointerEnter);
-            card.PointerExitEvent.AddListener(CardPointerExit);
             card.BeginDragEvent.AddListener(BeginDrag);
             card.EndDragEvent.AddListener(EndDrag);
-            card.name = cardCount.ToString();
-            cardCount++;
-        }
-
-        StartCoroutine(Frame());
-
-        IEnumerator Frame()
-        {
-            yield return new WaitForSecondsRealtime(.1f);
-            for (int i = 0; i < cards.Count; i++)
-            {
-                if (cards[i].cardVisual != null)
-                    cards[i].cardVisual.UpdateIndex(transform.childCount);
-            }
         }
     }
 
@@ -62,104 +67,112 @@ public class HorizontalCardHolder : MonoBehaviour
         selectedCard = card;
     }
 
-
-    void EndDrag(Card card)
+    private void EndDrag(Card card)
     {
-        if (selectedCard == null)
-            return;
-
-        selectedCard.transform.DOLocalMove(selectedCard.selected ? new Vector3(0, selectedCard.selectionOffset, 0) : Vector3.zero, tweenCardReturn ? .15f : 0).SetEase(Ease.OutBack);
-
-        rect.sizeDelta += Vector2.right;
-        rect.sizeDelta -= Vector2.right;
-
         selectedCard = null;
-
     }
 
-    void CardPointerEnter(Card card)
+    public bool IsCentered(Card card)
     {
-        hoveredCard = card;
+        return centeredCard == card;
     }
 
-    void CardPointerExit(Card card)
+    public void CenterCardVisual(Card card)
     {
-        hoveredCard = null;
-    }
-
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Delete))
-        {
-            if (hoveredCard != null)
-            {
-                Destroy(hoveredCard.transform.parent.gameObject);
-                cards.Remove(hoveredCard);
-
-            }
-        }
-
-        if (Input.GetMouseButtonDown(1))
-        {
-            foreach (Card card in cards)
-            {
-                card.Deselect();
-            }
-        }
-
-        if (selectedCard == null)
+        if (card == null)
             return;
 
-        if (isCrossing)
+        if (centeredVisualLayer == null)
             return;
 
-        for (int i = 0; i < cards.Count; i++)
+        if (card.cardVisual == null)
+            return;
+
+        if (centeredCard == card)
+            return;
+
+        if (centeredCard != null)
+            UncenterCardVisual(centeredCard);
+
+        RectTransform visualRect = card.cardVisual.transform as RectTransform;
+        if (visualRect == null)
+            return;
+
+        VisualRestoreData data = new VisualRestoreData
         {
+            visualRect = visualRect,
+            originalParent = visualRect.parent,
+            originalSiblingIndex = visualRect.GetSiblingIndex(),
+            originalAnchoredPos = visualRect.anchoredPosition,
+            originalScale = visualRect.localScale
+        };
 
-            if (selectedCard.transform.position.x > cards[i].transform.position.x)
-            {
-                if (selectedCard.ParentIndex() < cards[i].ParentIndex())
-                {
-                    Swap(i);
-                    break;
-                }
-            }
+        restoreData[card] = data;
 
-            if (selectedCard.transform.position.x < cards[i].transform.position.x)
-            {
-                if (selectedCard.ParentIndex() > cards[i].ParentIndex())
-                {
-                    Swap(i);
-                    break;
-                }
-            }
-        }
+        visualRect.DOKill();
+
+        card.cardVisual.SetCentered(true);
+
+        visualRect.SetParent(centeredVisualLayer, false);
+        visualRect.SetAsLastSibling();
+
+        visualRect.anchorMin = new Vector2(0.5f, 0.5f);
+        visualRect.anchorMax = new Vector2(0.5f, 0.5f);
+        visualRect.pivot = new Vector2(0.5f, 0.5f);
+
+        visualRect.anchoredPosition = Vector2.zero;
+
+        visualRect.DOAnchorPos(Vector2.zero, centerTweenTime).SetEase(Ease.OutBack);
+        visualRect.DOScale(centeredScale, centerTweenTime).SetEase(Ease.OutBack);
+
+        centeredCard = card;
+
     }
 
-    void Swap(int index)
+    public void UncenterCardVisual(Card card)
     {
-        isCrossing = true;
-
-        Transform focusedParent = selectedCard.transform.parent;
-        Transform crossedParent = cards[index].transform.parent;
-
-        cards[index].transform.SetParent(focusedParent);
-        cards[index].transform.localPosition = cards[index].selected ? new Vector3(0, cards[index].selectionOffset, 0) : Vector3.zero;
-        selectedCard.transform.SetParent(crossedParent);
-
-        isCrossing = false;
-
-        if (cards[index].cardVisual == null)
+        if (card == null)
             return;
 
-        bool swapIsRight = cards[index].ParentIndex() > selectedCard.ParentIndex();
-        cards[index].cardVisual.Swap(swapIsRight ? -1 : 1);
+        if (card.cardVisual != null)
+            card.cardVisual.SetCentered(false);
 
-        //Updated Visual Indexes
-        foreach (Card card in cards)
+
+        if (!restoreData.TryGetValue(card, out VisualRestoreData data))
         {
-            card.cardVisual.UpdateIndex(transform.childCount);
-        }
-    }
+            if (centeredCard == card)
+                centeredCard = null;
 
+            return;
+        }
+
+        RectTransform visualRect = data.visualRect;
+        if (visualRect == null)
+        {
+            restoreData.Remove(card);
+            if (centeredCard == card) centeredCard = null;
+            return;
+        }
+
+        visualRect.DOKill();
+
+        visualRect.DOScale(data.originalScale, centerTweenTime).SetEase(Ease.OutBack);
+
+        visualRect.DOAnchorPos(data.originalAnchoredPos, centerTweenTime)
+            .SetEase(Ease.OutBack)
+            .OnComplete(() =>
+            {
+                if (visualRect == null) return;
+
+                visualRect.SetParent(data.originalParent, false);
+                visualRect.SetSiblingIndex(data.originalSiblingIndex);
+                visualRect.anchoredPosition = data.originalAnchoredPos;
+                visualRect.localScale = data.originalScale;
+            });
+
+        restoreData.Remove(card);
+
+        if (centeredCard == card)
+            centeredCard = null;
+    }
 }

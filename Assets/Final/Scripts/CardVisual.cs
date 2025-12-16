@@ -62,6 +62,13 @@ public class CardVisual : MonoBehaviour
     private float curveRotationOffset;
     private Coroutine pressCoroutine;
 
+    [SerializeField] private bool rotateOnlyWhenCentered = true;
+    private bool isCentered;
+    private Vector3 centeredPosition;
+    private Vector3 centeredEuler;
+    private Vector3 centeredScale;
+
+
     private void Start()
     {
         shadowDistance = visualShadow.localPosition;
@@ -97,11 +104,35 @@ public class CardVisual : MonoBehaviour
     {
         if (!initalize || parentCard == null) return;
 
+        if (isCentered)
+        {
+            // Cuando está centrada: no seguir a la Card del slot
+            // (queda donde el holder la puso)
+            return;
+        }
+
+        // Cuando NO está centrada: sí seguir posición, pero sin rotación
         HandPositioning();
         SmoothFollow();
-        FollowRotation();
-        CardTilt();
 
+        // Apaga cualquier rotación/tilt/punch visual en no-centrada
+        transform.localRotation = Quaternion.identity;
+
+        if (tiltParent != null) tiltParent.localRotation = Quaternion.identity;
+        if (shakeParent != null) shakeParent.localRotation = Quaternion.identity;
+    }
+
+
+    public void SetCentered(bool centered)
+    {
+        isCentered = centered;
+    }
+
+    public void SnapshotCenteredState()
+    {
+        centeredPosition = transform.position;
+        centeredEuler = transform.eulerAngles;
+        centeredScale = transform.localScale;
     }
 
     private void HandPositioning()

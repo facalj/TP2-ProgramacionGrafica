@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: c671c2ac4f4d4a84c81e5977e759e174
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures:
+  - _Mask1: {fileID: 2800000, guid: 8964fd4100b742147af2cd070f53ca49, type: 3}
+  - _Imagen1: {fileID: 2800000, guid: 0a60a34ebcd88c84e914f1aaac7a91bf, type: 3}
+  - _Brillo1: {fileID: 2800000, guid: eac6f9b6fcb311f4a9e72fbe47e388d0, type: 3}
+  - _Flow2: {fileID: 2800000, guid: 131633c45b26caa4f9673a16077a1970, type: 3}
+  - _FlowDirection2: {fileID: 2800000, guid: fd6c5c05e964dc040bf165764037c73f, type: 3}
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

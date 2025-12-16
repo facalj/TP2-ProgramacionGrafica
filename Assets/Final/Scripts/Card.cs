@@ -39,6 +39,17 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     [HideInInspector] public UnityEvent<Card> EndDragEvent;
     [HideInInspector] public UnityEvent<Card, bool> SelectEvent;
 
+    private void Awake()
+    {
+        if (PointerEnterEvent == null) PointerEnterEvent = new UnityEngine.Events.UnityEvent<Card>();
+        if (PointerExitEvent == null) PointerExitEvent = new UnityEngine.Events.UnityEvent<Card>();
+        if (PointerUpEvent == null) PointerUpEvent = new UnityEngine.Events.UnityEvent<Card, bool>();
+        if (PointerDownEvent == null) PointerDownEvent = new UnityEngine.Events.UnityEvent<Card>();
+        if (BeginDragEvent == null) BeginDragEvent = new UnityEngine.Events.UnityEvent<Card>();
+        if (EndDragEvent == null) EndDragEvent = new UnityEngine.Events.UnityEvent<Card>();
+        if (SelectEvent == null) SelectEvent = new UnityEngine.Events.UnityEvent<Card, bool>();
+    }
+
     void Start()
     {
         canvas = GetComponentInParent<Canvas>();
@@ -54,45 +65,41 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
 
     void Update()
     {
-        ClampPosition();
-
         if (!isDragging)
             return;
 
-        // Distancia en Z desde la cámara hasta el plano donde se mueven las cartas
         float zPlane = Mathf.Abs(Camera.main.transform.position.z);
-
-        // Mouse en coordenadas de mundo, en el mismo plano Z que la carta
         Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(
             new Vector3(Input.mousePosition.x, Input.mousePosition.y, zPlane)
         );
 
-        Vector2 targetPosition = (Vector2)mouseWorld - (Vector2)offset;
-        Vector2 direction = (targetPosition - (Vector2)transform.position).normalized;
-        float distance = Vector2.Distance(transform.position, targetPosition);
+        Vector2 targetPosition = (Vector2)mouseWorld + (Vector2)offset;
+        Vector2 delta = targetPosition - (Vector2)transform.position;
+        float distance = delta.magnitude;
 
-        Vector2 velocity = direction * Mathf.Min(moveSpeedLimit, distance / Time.deltaTime);
-
-        // Movimiento en mundo (mantiene bien el orden y el Swap)
-        transform.Translate(velocity * Time.deltaTime, Space.World);
+        if (distance > 0.001f)
+        {
+            Vector2 direction = delta / distance;
+            Vector2 velocity = direction * Mathf.Min(moveSpeedLimit, distance / Time.deltaTime);
+            transform.Translate(velocity * Time.deltaTime, Space.World);
+        }
     }
 
-    void ClampPosition()
+
+    void ClampToCanvasBounds()
     {
-        float zPlane = Mathf.Abs(Camera.main.transform.position.z);
+        RectTransform canvasRect = canvas.transform as RectTransform;
+        RectTransform cardRect = transform as RectTransform;
 
-        Vector3 topRight = Camera.main.ScreenToWorldPoint(
-            new Vector3(Screen.width, Screen.height, zPlane)
-        );
-        Vector3 bottomLeft = Camera.main.ScreenToWorldPoint(
-            new Vector3(0f, 0f, zPlane)
-        );
+        Vector3 pos = cardRect.localPosition;
 
-        Vector3 pos = transform.position;
-        pos.x = Mathf.Clamp(pos.x, bottomLeft.x, topRight.x);
-        pos.y = Mathf.Clamp(pos.y, bottomLeft.y, topRight.y);
+        float halfWidth = canvasRect.rect.width / 2f - cardRect.rect.width / 2f;
+        float halfHeight = canvasRect.rect.height / 2f - cardRect.rect.height / 2f;
 
-        transform.position = new Vector3(pos.x, pos.y, transform.position.z);
+        pos.x = Mathf.Clamp(pos.x, -halfWidth, halfWidth);
+        pos.y = Mathf.Clamp(pos.y, -halfHeight, halfHeight);
+
+        cardRect.localPosition = pos;
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -104,14 +111,16 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
             new Vector3(eventData.position.x, eventData.position.y, zPlane)
         );
 
-        offset = mouseWorld - transform.position;
+        // IMPORTANTE: offset = card - mouse (esto arregla el movimiento invertido)
+        offset = (Vector2)transform.position - (Vector2)mouseWorld;
 
         isDragging = true;
-        canvas.GetComponent<GraphicRaycaster>().enabled = false;
         imageComponent.raycastTarget = false;
 
         wasDragged = true;
     }
+
+
 
 
     public void OnDrag(PointerEventData eventData)
@@ -122,7 +131,7 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     {
         EndDragEvent.Invoke(this);
         isDragging = false;
-        canvas.GetComponent<GraphicRaycaster>().enabled = true;
+        //canvas.GetComponent<GraphicRaycaster>().enabled = true;
         imageComponent.raycastTarget = true;
 
         StartCoroutine(FrameWait());
@@ -163,22 +172,37 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
 
         pointerUpTime = Time.time;
 
-        PointerUpEvent.Invoke(this, pointerUpTime - pointerDownTime > .2f);
+        if (PointerUpEvent != null)
+            PointerUpEvent.Invoke(this, pointerUpTime - pointerDownTime > 0.2f);
 
-        if (pointerUpTime - pointerDownTime > .2f)
+        if (pointerUpTime - pointerDownTime > 0.2f)
             return;
 
         if (wasDragged)
             return;
 
-        selected = !selected;
-        SelectEvent.Invoke(this, selected);
+        HorizontalCardHolder holder = GetComponentInParent<HorizontalCardHolder>();
+        if (holder == null)
+            return;
 
-        if (selected)
-            transform.localPosition += (cardVisual.transform.up * selectionOffset);
-        else
-            transform.localPosition = Vector3.zero;
+        if (eventData.clickCount >= 2)
+        {
+            selected = false;
+            if (SelectEvent != null)
+                SelectEvent.Invoke(this, false);
+
+            holder.UncenterCardVisual(this);
+            return;
+        }
+
+        selected = true;
+        if (SelectEvent != null)
+            SelectEvent.Invoke(this, true);
+
+        holder.CenterCardVisual(this);
     }
+
+
 
     public void Deselect()
     {
