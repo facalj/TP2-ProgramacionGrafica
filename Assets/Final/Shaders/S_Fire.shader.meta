@@ -3,12 +3,12 @@ guid: ee37dc5ce41b153479fe428e624a1022
 ShaderImporter:
   externalObjects: {}
   defaultTextures:
-  - _Texture: {fileID: 2800000, guid: 6b6e7903612e77f4ba1d6a5c407bbad4, type: 3}
-  - _Fire: {fileID: 2800000, guid: f7e96904e8667e1439548f0f86389447, type: 3}
-  - _DistortionNormalMap: {fileID: 2800000, guid: dd2fd2df93418444c8e280f1d34deeb5, type: 3}
-  - _BlendFireMask: {fileID: 2800000, guid: 55d8d6939f4a8d1459d9e8a23745da0a, type: 3}
   - _Texture0: {fileID: 2800000, guid: 131633c45b26caa4f9673a16077a1970, type: 3}
   - _Texture1: {fileID: 2800000, guid: 67024cf7307e4394ba78211aa1573ecb, type: 3}
+  - _Texture: {fileID: 2800000, guid: 6b6e7903612e77f4ba1d6a5c407bbad4, type: 3}
+  - _Fire: {fileID: 2800000, guid: f7e96904e8667e1439548f0f86389447, type: 3}
+  - _DistortionNormal: {fileID: 2800000, guid: dd2fd2df93418444c8e280f1d34deeb5, type: 3}
+  - _BlendFireMask: {fileID: 2800000, guid: 55d8d6939f4a8d1459d9e8a23745da0a, type: 3}
   nonModifiableTextures: []
   userData: 
   assetBundleName: 

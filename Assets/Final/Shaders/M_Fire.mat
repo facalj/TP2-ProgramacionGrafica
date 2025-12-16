@@ -24,7 +24,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BlendFireMask:
-        m_Texture: {fileID: 2800000, guid: 55d8d6939f4a8d1459d9e8a23745da0a, type: 3}
+        m_Texture: {fileID: 2800000, guid: 27417a908e222e541a8392d922b67986, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BlendFireMask1:
@@ -33,6 +33,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _DistortionMask1:
         m_Texture: {fileID: 2800000, guid: 55d8d6939f4a8d1459d9e8a23745da0a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DistortionNormal:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DistortionNormalMap:
@@ -93,6 +97,7 @@ Material:
     - _DistortAmount: 0.36
     - _DistortAmount1: 0
     - _DistortionAmount1: 0.6429809
+    - _Float1: 0.25
     - _Stencil: 0
     - _StencilComp: 8
     - _StencilOp: 0
@@ -100,7 +105,9 @@ Material:
     - _StencilWriteMask: 255
     - _UseUIAlphaClip: 0
     m_Colors:
+    - _BorderColor: {r: 0.1320755, g: 0.1320755, b: 0.1320755, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color0: {r: 0.13207543, g: 0.13207543, b: 0.13207543, a: 0}
     - _VectorMove1: {r: 0.1, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
