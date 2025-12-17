@@ -5,26 +5,29 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Grupo 00/00 - Generals/00 -  MainMenu.unity
     guid: 526244d3151fa9343bbf0369f3d0c3bc
-  - enabled: 1
+  - enabled: 0
     path: Assets/Grupo 00/01 - Render Texture - Distance/01 - Distance.unity
     guid: a5f74bb321fd85748901bedbca79538c
-  - enabled: 1
+  - enabled: 0
     path: Assets/Grupo 00/01 - Render Texture - Distance/01 - Render.unity
     guid: b947f77dd2c088b47a65b57f0de0591c
-  - enabled: 1
+  - enabled: 0
     path: Assets/Grupo 00/04 - Stencil/04 - Stencil.unity
     guid: 5afcf5114d806aa47906e59981f48fbd
-  - enabled: 1
+  - enabled: 0
     path: Assets/Grupo 00/03 - UI/03 - UI.unity
     guid: 764cd124a471fd442bcd03c9920013a6
-  - enabled: 1
+  - enabled: 0
     path: Assets/Grupo 00/05 Projector/05 - Projector.unity
     guid: 62ff73970c663684980b33295df78a9c
-  - enabled: 1
+  - enabled: 0
     path: Assets/Grupo 00/02 - Post Process/02 - PostProccess.unity
     guid: 30e8f777e0ab5e14594e6120036905e8
+  - enabled: 1
+    path: Assets/Final/Demo_Desert_01.unity
+    guid: 252bfa41218daf148aa0eff6a55b8d21
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0
