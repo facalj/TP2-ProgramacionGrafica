@@ -45,6 +45,8 @@ Material:
     - _PowerDepthFade: 6.03
     - __dirty: 0
     - _distortion: 1
+    - _maxShield: 0.3
+    - _minShield: 0.1
     - _speed: 0.162
     m_Colors:
     - _PanSpeed: {r: -3, g: -3, b: 0, a: 0}
