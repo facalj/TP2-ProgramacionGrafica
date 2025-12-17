@@ -7,9 +7,12 @@ public class CastButtonController : MonoBehaviour
     [Header("UI")]
     [SerializeField] private Button castButton;
 
-    [Header("Animator")]
+    [Header("Animator Param")]
     [SerializeField] private string castBoolName = "Cast";
     [SerializeField] private float castDuration = 1.5f;
+
+    [Header("Debug")]
+    [SerializeField] private bool logDebug = true;
 
     private Animator currentAnimator;
     private int castBoolHash;
@@ -18,12 +21,24 @@ public class CastButtonController : MonoBehaviour
 
     private void Awake()
     {
+        if (castButton == null)
+            castButton = GetComponent<Button>();
+
         castBoolHash = Animator.StringToHash(castBoolName);
 
         if (castButton != null)
         {
+            castButton.onClick.RemoveListener(OnCastButtonPressed);
             castButton.onClick.AddListener(OnCastButtonPressed);
+
             castButton.interactable = false;
+
+            if (logDebug)
+                Debug.Log($"[CastButtonController] Awake on '{gameObject.name}'. Listener set. interactable=false (waiting animator).");
+        }
+        else
+        {
+            Debug.LogWarning($"[CastButtonController] No Button assigned/found on '{gameObject.name}'.");
         }
     }
 
@@ -31,12 +46,18 @@ public class CastButtonController : MonoBehaviour
     {
         currentAnimator = animator;
 
+        if (logDebug)
+            Debug.Log($"[CastButtonController] SetTargetAnimator on '{gameObject.name}': {(currentAnimator != null ? currentAnimator.name : "NULL")}");
+
         if (castButton != null)
             castButton.interactable = currentAnimator != null && !isCasting;
     }
 
     public void ClearTarget()
     {
+        if (logDebug)
+            Debug.Log($"[CastButtonController] ClearTarget on '{gameObject.name}'");
+
         currentAnimator = null;
 
         if (castRoutine != null)
@@ -53,6 +74,9 @@ public class CastButtonController : MonoBehaviour
 
     public void OnCastButtonPressed()
     {
+        if (logDebug)
+            Debug.Log($"[CastButtonController] Button pressed on '{gameObject.name}'. currentAnimator={(currentAnimator != null ? currentAnimator.name : "NULL")}");
+
         if (currentAnimator == null)
             return;
 
@@ -72,12 +96,20 @@ public class CastButtonController : MonoBehaviour
         if (castButton != null)
             castButton.interactable = false;
 
+        if (logDebug)
+            Debug.Log($"[CastButtonController] SetBool '{castBoolName}' = true on animator '{currentAnimator.name}'");
+
         currentAnimator.SetBool(castBoolHash, true);
 
         yield return new WaitForSeconds(castDuration);
 
         if (currentAnimator != null)
+        {
+            if (logDebug)
+                Debug.Log($"[CastButtonController] SetBool '{castBoolName}' = false on animator '{currentAnimator.name}'");
+
             currentAnimator.SetBool(castBoolHash, false);
+        }
 
         isCasting = false;
 

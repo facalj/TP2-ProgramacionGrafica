@@ -23,6 +23,7 @@ public class HorizontalCardHolder : MonoBehaviour
     [SerializeField] private float centerTweenTime = 0.25f;
     [SerializeField] private Vector3 centeredScale = Vector3.one * 1.1f;
 
+    [Header("Cast Button")]
     [SerializeField] private CastButtonController castButton;
 
     private Card centeredCard;
@@ -126,7 +127,6 @@ public class HorizontalCardHolder : MonoBehaviour
             }
 
             ForceCardVisualToBeChildOfCard(card);
-
             cards.Add(card);
         }
     }
@@ -200,6 +200,8 @@ public class HorizontalCardHolder : MonoBehaviour
 
     public void CenterCard(Card card)
     {
+        Debug.Log($"[HorizontalCardHolder] CenterCard called with card: {card?.name}");
+
         if (card == null)
             return;
 
@@ -207,6 +209,9 @@ public class HorizontalCardHolder : MonoBehaviour
         {
             activeObject.SetActive(false);
             activeObject = null;
+
+            if (castButton != null)
+                castButton.ClearTarget();
         }
 
         string id = card.CardId == null ? string.Empty : card.CardId.Trim();
@@ -215,15 +220,30 @@ public class HorizontalCardHolder : MonoBehaviour
         {
             target.SetActive(true);
             activeObject = target;
-            Animator animator = target.GetComponent<Animator>();
-            if (animator != null && castButton != null)
+
+            Animator animator =
+                target.GetComponentInChildren<Animator>(true) ??
+                target.GetComponentInParent<Animator>(true);
+
+            Debug.Log($"[HorizontalCardHolder] Target: {target.name} | Animator found: {animator != null}");
+            Debug.Log($"[HorizontalCardHolder] castButton ref: {(castButton != null ? castButton.gameObject.name : "NULL")}");
+
+            if (castButton != null)
             {
-                castButton.SetTargetAnimator(animator);
+                if (animator != null) castButton.SetTargetAnimator(animator);
+                else castButton.ClearTarget();
+            }
+            else
+            {
+                Debug.LogWarning("[HorizontalCardHolder] castButton is NULL. Assign it in the inspector (Canvas CastButtonController).");
             }
         }
         else
         {
             Debug.LogWarning($"No scene binding found for CardId: '{id}'");
+
+            if (castButton != null)
+                castButton.ClearTarget();
         }
     }
 
@@ -234,6 +254,9 @@ public class HorizontalCardHolder : MonoBehaviour
             activeObject.SetActive(false);
             activeObject = null;
         }
+
+        if (castButton != null)
+            castButton.ClearTarget();
     }
 
     public void CenterCardVisual(Card card)
@@ -278,7 +301,6 @@ public class HorizontalCardHolder : MonoBehaviour
 
         centeredCard = card;
 
-        // ✅ ACÁ ESTABA EL PROBLEMA: activar el modelo asociado cuando la carta queda centrada
         CenterCard(card);
     }
 
@@ -324,7 +346,6 @@ public class HorizontalCardHolder : MonoBehaviour
         if (centeredCard == card)
             centeredCard = null;
 
-        // ✅ Si querés que al "descentrar" se apague el modelo:
         ClearCenteredCard();
     }
 }
