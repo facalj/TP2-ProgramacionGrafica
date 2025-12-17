@@ -94702,17 +94702,17 @@ MonoBehaviour:
   centeredScale: {x: 1.1, y: 1.1, z: 1.1}
   castButton: {fileID: 9069539}
   sceneBindings:
-  - cardId: shield1
+  - cardId: shield2
     targetObject: {fileID: 1773371843973393549}
   - cardId: poly
     targetObject: {fileID: 5116003522810499016}
   - cardId: fire
     targetObject: {fileID: 6941171421282535109}
-  - cardId: shield2
+  - cardId: shield3
     targetObject: {fileID: 4148077833597859126}
   - cardId: water
     targetObject: {fileID: 227307548795235237}
-  - cardId: shield3
+  - cardId: shield1
     targetObject: {fileID: 6416532451044616754}
 --- !u!1 &3585165104942566288
 GameObject:
