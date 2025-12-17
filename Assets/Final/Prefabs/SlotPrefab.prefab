@@ -208,6 +208,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6252688344283255616, guid: 72bb2c6ee17534844a857d6fb7254fba, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6252688344283255616, guid: 72bb2c6ee17534844a857d6fb7254fba, type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7163805590819086791, guid: 72bb2c6ee17534844a857d6fb7254fba, type: 3}
       propertyPath: m_Name
       value: Card
