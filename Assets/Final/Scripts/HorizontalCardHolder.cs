@@ -160,7 +160,34 @@ public class HorizontalCardHolder : MonoBehaviour
     }
 
     public bool IsCentered(Card card) => centeredCard == card;
+    public void CenterCard(Card newCenteredCard)
+    {
+        if (newCenteredCard == centeredCard)
+            return;
 
+        // Apagar el GameObject de la carta anterior
+        if (centeredCard != null)
+        {
+            centeredCard.DeactivateLinkedObject();
+        }
+
+        // Setear nueva carta centrada
+        centeredCard = newCenteredCard;
+
+        // Activar su GameObject asociado
+        if (centeredCard != null)
+        {
+            centeredCard.ActivateLinkedObject();
+        }
+    }
+    public void ClearCenteredCard()
+    {
+        if (centeredCard != null)
+        {
+            centeredCard.DeactivateLinkedObject();
+            centeredCard = null;
+        }
+    }
     public void CenterCardVisual(Card card)
     {
         if (card == null) return;

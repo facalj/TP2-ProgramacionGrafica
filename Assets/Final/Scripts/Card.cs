@@ -12,6 +12,9 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     private VisualCardsHandler visualHandler;
     private Vector3 offset;
 
+    [Header("Linked GameObject")]
+    [SerializeField] private GameObject linkedGameObject;
+
     [Header("Movement")]
     [SerializeField] private float moveSpeedLimit = 50;
 
@@ -85,7 +88,17 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
         }
     }
 
+    public void ActivateLinkedObject()
+    {
+        if (linkedGameObject != null)
+            linkedGameObject.SetActive(true);
+    }
 
+    public void DeactivateLinkedObject()
+    {
+        if (linkedGameObject != null)
+            linkedGameObject.SetActive(false);
+    }
     void ClampToCanvasBounds()
     {
         RectTransform canvasRect = canvas.transform as RectTransform;
