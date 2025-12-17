@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using DG.Tweening;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
 
 public class HorizontalCardHolder : MonoBehaviour
 {
@@ -22,9 +23,24 @@ public class HorizontalCardHolder : MonoBehaviour
     [SerializeField] private float centerTweenTime = 0.25f;
     [SerializeField] private Vector3 centeredScale = Vector3.one * 1.1f;
 
+    [SerializeField] private CastButtonController castButton;
+
     private Card centeredCard;
 
     private readonly Dictionary<Card, VisualRestoreData> restoreData = new Dictionary<Card, VisualRestoreData>();
+
+    [Serializable]
+    public class CardSceneBinding
+    {
+        public string cardId;
+        public GameObject targetObject;
+    }
+
+    [Header("Scene Bindings")]
+    [SerializeField] private List<CardSceneBinding> sceneBindings = new();
+
+    private readonly Dictionary<string, GameObject> bindingLookup = new Dictionary<string, GameObject>(StringComparer.OrdinalIgnoreCase);
+    private GameObject activeObject;
 
     private struct VisualRestoreData
     {
@@ -33,6 +49,27 @@ public class HorizontalCardHolder : MonoBehaviour
         public int originalSiblingIndex;
         public Vector2 originalAnchoredPos;
         public Vector3 originalScale;
+    }
+
+    private void Awake()
+    {
+        bindingLookup.Clear();
+
+        foreach (var binding in sceneBindings)
+        {
+            if (binding == null) continue;
+
+            string id = binding.cardId == null ? string.Empty : binding.cardId.Trim();
+            if (string.IsNullOrWhiteSpace(id)) continue;
+
+            if (binding.targetObject == null) continue;
+
+            if (!bindingLookup.ContainsKey(id))
+            {
+                bindingLookup.Add(id, binding.targetObject);
+                binding.targetObject.SetActive(false);
+            }
+        }
     }
 
     private void Start()
@@ -160,34 +197,45 @@ public class HorizontalCardHolder : MonoBehaviour
     }
 
     public bool IsCentered(Card card) => centeredCard == card;
-    public void CenterCard(Card newCenteredCard)
+
+    public void CenterCard(Card card)
     {
-        if (newCenteredCard == centeredCard)
+        if (card == null)
             return;
 
-        // Apagar el GameObject de la carta anterior
-        if (centeredCard != null)
+        if (activeObject != null)
         {
-            centeredCard.DeactivateLinkedObject();
+            activeObject.SetActive(false);
+            activeObject = null;
         }
 
-        // Setear nueva carta centrada
-        centeredCard = newCenteredCard;
+        string id = card.CardId == null ? string.Empty : card.CardId.Trim();
 
-        // Activar su GameObject asociado
-        if (centeredCard != null)
+        if (bindingLookup.TryGetValue(id, out var target) && target != null)
         {
-            centeredCard.ActivateLinkedObject();
+            target.SetActive(true);
+            activeObject = target;
+            Animator animator = target.GetComponent<Animator>();
+            if (animator != null && castButton != null)
+            {
+                castButton.SetTargetAnimator(animator);
+            }
+        }
+        else
+        {
+            Debug.LogWarning($"No scene binding found for CardId: '{id}'");
         }
     }
+
     public void ClearCenteredCard()
     {
-        if (centeredCard != null)
+        if (activeObject != null)
         {
-            centeredCard.DeactivateLinkedObject();
-            centeredCard = null;
+            activeObject.SetActive(false);
+            activeObject = null;
         }
     }
+
     public void CenterCardVisual(Card card)
     {
         if (card == null) return;
@@ -229,6 +277,9 @@ public class HorizontalCardHolder : MonoBehaviour
         visualRect.DOScale(centeredScale, centerTweenTime).SetEase(Ease.OutBack);
 
         centeredCard = card;
+
+        // ✅ ACÁ ESTABA EL PROBLEMA: activar el modelo asociado cuando la carta queda centrada
+        CenterCard(card);
     }
 
     public void UncenterCardVisual(Card card)
@@ -272,5 +323,8 @@ public class HorizontalCardHolder : MonoBehaviour
 
         if (centeredCard == card)
             centeredCard = null;
+
+        // ✅ Si querés que al "descentrar" se apague el modelo:
+        ClearCenteredCard();
     }
 }

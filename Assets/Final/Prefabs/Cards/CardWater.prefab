@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6252688344283255616}
   - component: {fileID: 6678767300448709827}
   m_Layer: 0
-  m_Name: Card 6
+  m_Name: CardWater
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -89,6 +89,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   instantiateVisual: 1
+  cardId: water
+  linkedGameObject: {fileID: 5392783719559161562, guid: 88e201cee3cc75448ba7c6a2d9712d91, type: 3}
   moveSpeedLimit: 250
   selected: 0
   selectionOffset: 50

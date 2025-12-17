@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6252688344283255616}
   - component: {fileID: 6678767300448709827}
   m_Layer: 0
-  m_Name: Card 4
+  m_Name: CardShield1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -89,10 +89,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   instantiateVisual: 1
+  cardId: shield1
+  linkedGameObject: {fileID: 8786937333274675219, guid: 5a52f4d9f97953f4794be4823703db07, type: 3}
   moveSpeedLimit: 250
   selected: 0
   selectionOffset: 50
-  cardVisualPrefab: {fileID: 8793001010276348921, guid: 49909d60e21719044a838cbe33be4f60, type: 3}
+  cardVisualPrefab: {fileID: 8793001010276348921, guid: 35a9fac5d9602014cbd10d3742d73856, type: 3}
   cardVisual: {fileID: 0}
   isHovering: 0
   isDragging: 0

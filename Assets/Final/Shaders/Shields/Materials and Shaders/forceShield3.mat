@@ -24,7 +24,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _Texture0:
-        m_Texture: {fileID: 2800000, guid: f7e96904e8667e1439548f0f86389447, type: 3}
+        m_Texture: {fileID: 2800000, guid: f315990ed8933d242b7b496cd50d19eb, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TextureSample1:
@@ -37,12 +37,12 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _DistanceDepthFade: 1.2
-    - _FresnelBias: 2.03
-    - _FresnelPower: 3.88
-    - _FresnelScale: 0.7
-    - _Intensidad: 0.46
-    - _PowerDepthFade: 0.3
+    - _DistanceDepthFade: 5.11
+    - _FresnelBias: 5.71
+    - _FresnelPower: 5.9
+    - _FresnelScale: 255.12
+    - _Intensidad: 2.86
+    - _PowerDepthFade: 6.36
     - __dirty: 0
     - _distortion: 1
     - _speed: 0.162

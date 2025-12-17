@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6252688344283255616}
   - component: {fileID: 6678767300448709827}
   m_Layer: 0
-  m_Name: Card 3
+  m_Name: CardFire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -89,10 +89,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   instantiateVisual: 1
+  cardId: fire
+  linkedGameObject: {fileID: 4569203204480732719, guid: be4eb995e95855044986fc1a9a69fb98, type: 3}
   moveSpeedLimit: 250
   selected: 0
   selectionOffset: 50
-  cardVisualPrefab: {fileID: 8793001010276348921, guid: 35a9fac5d9602014cbd10d3742d73856, type: 3}
+  cardVisualPrefab: {fileID: 8793001010276348921, guid: 5bcf8242d04dbb2458c6bb92e144ce33, type: 3}
   cardVisual: {fileID: 0}
   isHovering: 0
   isDragging: 0
