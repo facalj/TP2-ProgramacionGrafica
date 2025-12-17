@@ -37,13 +37,13 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _DistanceDepthFade: 1.57
-    - _FresnelBias: 3.6
-    - _FresnelPower: 9.57
-    - _FresnelScale: 2
-    - _Intensidad: 15.38
-    - _PowerDepthFade: 8.19
-    - __dirty: 1
+    - _DistanceDepthFade: 5.1
+    - _FresnelBias: 3.54
+    - _FresnelPower: 3.33
+    - _FresnelScale: 53.09
+    - _Intensidad: 0.9
+    - _PowerDepthFade: -1.05
+    - __dirty: 0
     - _distortion: 0.173
     - _speed: 0.378
     m_Colors:

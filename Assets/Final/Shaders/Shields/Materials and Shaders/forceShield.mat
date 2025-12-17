@@ -42,13 +42,13 @@ Material:
     m_Ints: []
     m_Floats:
     - _Bias1: 0.8
-    - _DistanceDepthFade: 5.11
+    - _DistanceDepthFade: 30.4
     - _FresnelBias: 5.71
-    - _FresnelPower: 5.9
+    - _FresnelPower: 1.59
     - _FresnelScale: 255.12
-    - _Intensidad: 2.86
+    - _Intensidad: 0.2
     - _Pow1: 3.07
-    - _PowerDepthFade: 6.36
+    - _PowerDepthFade: 1.24
     - _Scale1: 0.452
     - _TransAmbient: 0.2
     - _TransDirect: 1
